@@ -1,0 +1,41 @@
+Imports System.Data.OleDb
+Imports System.Data
+
+
+Public Class WebForm1
+    Inherits System.Web.UI.Page
+
+
+    Dim con As OleDbConnection
+    Dim com As OleDbCommand
+    Dim dr As OleDbDataReader
+    Dim name As String
+    Dim email As String
+    Dim subject As String
+    Dim comment As String
+
+
+    Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+        con = New OleDbConnection("server=localhost;user id=root;persistsecurityinfo=True;database=schh")
+
+
+    End Sub
+
+    Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        con.Open()
+
+        Dim str As String
+        Dim var As Integer
+
+        str = "insert into info values('" & Request.Form("uname") & "','" & Request.Form("uemail") & "','" & Request.Form("subject") & "','" & Request.Form("comment") & "') "
+        com = New OleDbCommand(str, con)
+        var = com.ExecuteNonQuery()
+        MsgBox("INSERTED RECORD ")
+
+        Response.Redirect("http://localhost:10046/WebForm1.aspx")
+        con.Close()
+
+    End Sub
+
+
+End Class
